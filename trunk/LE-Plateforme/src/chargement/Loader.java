@@ -7,7 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import main.IAfficheur;
-import main.ProxyAfficheur;
+import main.IChargeur;
+import main.IGestionnaire;
+import main.IModificateur;
 
 
 public class Loader {
@@ -23,7 +25,7 @@ public class Loader {
 		String ligne = "";
 		boolean trouve = false;
 		String nomClasse = "";
-		
+		                
 		br = new BufferedReader(new FileReader("/comptes/E096489E/workspace/LogicielsExtensibles/src/codeTiers/" + nomFichier));
 		while ((ligne = br.readLine()) != null){
 			String[] args = ligne.split("=");
@@ -35,6 +37,7 @@ public class Loader {
 				hm.put(args[0],args[1]);
 			}
 		}
+		br.close();
 		
 		if (trouve){
 			Class<?> classe = Class.forName(nomClasse);
