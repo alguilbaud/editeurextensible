@@ -1,8 +1,12 @@
 package traducteurSchtroumpf;
 
-import main.IModificateur;
+import editeur.IModificateur;
 
 public class TraducteurSchtroumpf implements IModificateur{
+	
+	public String informationsPlugin(){
+		return "Je suis un traducteur en Schtroumpf.";
+	}
 	
 	public String modifier(String texte){
 		String[] mots = texte.split(" ");
