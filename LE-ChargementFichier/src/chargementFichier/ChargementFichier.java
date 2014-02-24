@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import main.IChargeur;
+import editeur.IChargeur;
 
 public class ChargementFichier implements IChargeur{
+	
+	public String informationsPlugin(){
+		return "Je suis un chargeur de données à partir d'un fichier.";
+	}
 
 	public String recupererDonnees(String param) {
 		String res = "";
