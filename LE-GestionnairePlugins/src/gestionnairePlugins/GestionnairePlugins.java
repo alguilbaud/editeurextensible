@@ -2,9 +2,13 @@ package gestionnairePlugins;
 
 import java.util.HashMap;
 
-import main.IGestionnaire;
+import editeur.IGestionnaire;
 
 public class GestionnairePlugins implements IGestionnaire{
+	
+	public String informationsPlugin(){
+		return "Je suis un gestionnaire de plugins.";
+	}
 
 	@Override
 	public HashMap<String, String> listerPlugins() {
@@ -14,7 +18,6 @@ public class GestionnairePlugins implements IGestionnaire{
 
 	@Override
 	public void activerPlugin(String nomPlugin) {
-		// TODO Auto-generated method stub
 		
 	}
 
