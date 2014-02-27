@@ -66,7 +66,14 @@ public class Loader {
 		}
 	}
 	
-	private HashMap<String,String> getNomsTypes(){
-		return mapNomsTypes;
+	private ArrayList<String> getNomsPlugins(String type){
+		ArrayList<String> noms = new ArrayList<String>();
+		for (String n : mapNomsTypes.keySet()){
+			if(mapNomsTypes.get(n).equals(type)){
+				noms.add(n);
+			}
+		}
+		return noms;
 	}
+	
 }

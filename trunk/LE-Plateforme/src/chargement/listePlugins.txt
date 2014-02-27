@@ -1,4 +1,5 @@
 #Nom,ClassName,ClassPath,Rôle,ChargementAuto(1 si oui, 0 sinon)
+Editeur de texte,editeur.Editeur,/LE-Editeur/bin/,application,1
 Gestionnaire de plugins,gestionnairePlugins.GestionnairePlugins,/LE-GestionnairePlugins/bin/,gestionnaire,1
 Afficheur du nombre de lignes,afficheurNbLignes.AfficheurNbLignes,/LE-AfficheurNbLignes/bin/,afficheur,0
 Chargeur de fichier,chargementFichier.ChargementFichier,/LE-ChargementFichier/bin/,chargeur,0
