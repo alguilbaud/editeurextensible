@@ -1,14 +1,18 @@
 package afficheurNbLignes;
 
-import main.IAfficheur;
+import editeur.IAfficheur;
 
 public class AfficheurNbLignes implements IAfficheur{
+	
+	public String informationsPlugin(){
+		return "Je suis un afficheur avec numéros de lignes.";
+	}
 
 	public void afficher(String texte) {
-		String[] lignes = texte.split("\n");
+		/*String[] lignes = texte.split("\n");
 		for(int i=0; i<lignes.length;i++){
 			System.out.println((i+1) + " " + lignes[i]);
-		}
+		}*/
 	}
 
 	
