@@ -1,29 +1,32 @@
 package gestionnairePlugins;
 
-import java.util.HashMap;
+import chargement.IPlugin;
 
-import editeur.IGestionnaire;
-
-public class GestionnairePlugins implements IGestionnaire{
+public class GestionnairePlugins implements IPlugin{
 	
 	public String informationsPlugin(){
 		return "Je suis un gestionnaire de plugins.";
 	}
-
+	
+	//pour l'instant osef du gestionnaire, normalement c'est juste un affichage graphique, toutes les actions se font avec le loader
+	
+	/*
 	@Override
 	public HashMap<String, String> listerPlugins() {
-		//TODO : aller chercher la mapNomsTypes du Loader
+		
 		return null;
 	}
 
 	@Override
 	public void activerPlugin(String nomPlugin) {
-		//TODO : activer un Plugin
+		
 	}
 
 	@Override
 	public void desactiverPlugin(String nomPlugin) {
-		//TODO : désactiver un Plugin (vraiment nécessaire de pouvoir désactiver ?)
+		
 	}
+	
+	*/
 
 }
