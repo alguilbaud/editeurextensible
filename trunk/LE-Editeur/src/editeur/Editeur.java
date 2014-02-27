@@ -3,24 +3,30 @@ package editeur;
 import chargement.IPlugin;
 
 public class Editeur implements IPlugin{
-	private String texte;
-	private String pressePapier; //stocke ce qui est copié
-	private int debutCurseur; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
-	private int longueurSelection;
+	IAfficheur aff = null;
 	
-	public Editeur(){
-		texte = "";
-		pressePapier = "";
-		debutCurseur = 0;
-		longueurSelection = 0;
-	}
+	private String texte = "";
+	private String pressePapier = ""; //stocke ce qui est copié
+	private int debutCurseur = 0; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
+	private int longueurSelection = 0;
+	
 	
 	public String informationsPlugin(){
-		return "Je suis un édtieur de texte.";
+		return "Je suis un éditeur de texte.";
+	}
+	
+	public void demarrer(){
+		//TODO : à faire
+		
 	}
 	
 	public void afficher(){
-		System.out.println(texte);
+		if (aff!=null){
+			aff.afficher(texte);
+		}
+		else{
+			//TODO : affichage graphique standard à faire
+		}
 	}
 	
 	public void positionnerCurseur(int pos){
@@ -87,8 +93,5 @@ public class Editeur implements IPlugin{
 		}
 	}
 	
-	public void deplacer(){
-		//TODO : à faire
-	}
 	
 }
