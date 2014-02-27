@@ -12,19 +12,18 @@ public class GestionnairePlugins implements IGestionnaire{
 
 	@Override
 	public HashMap<String, String> listerPlugins() {
-		// TODO Auto-generated method stub
+		//TODO : aller chercher la mapNomsTypes du Loader
 		return null;
 	}
 
 	@Override
 	public void activerPlugin(String nomPlugin) {
-		
+		//TODO : activer un Plugin
 	}
 
 	@Override
 	public void desactiverPlugin(String nomPlugin) {
-		// TODO Auto-generated method stub
-		
+		//TODO : désactiver un Plugin (vraiment nécessaire de pouvoir désactiver ?)
 	}
 
 }
