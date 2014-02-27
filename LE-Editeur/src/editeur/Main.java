@@ -12,9 +12,9 @@ public class Main {
 	public static void main(String[] args) throws Throwable {
 		Loader l = new Loader();
 		l.loadAuto();
-		Editeur ed = new Editeur();
 		
-		ed.ecrire("abcdefghi");
+		
+		/*ed.ecrire("abcdefghi");
 		
 		ed.afficher();
 		
@@ -46,15 +46,10 @@ public class Main {
 		
 		ed.afficher();
 		
-		/*ed.selectionner(0,2);
-		ed.deplacer(11);
-		
-		ed.afficher();*/
-		
 		ed.selectionner(9,11);
 		ed.effacer();
 		
-		ed.afficher();
+		ed.afficher();*/
 	}
 
 }
