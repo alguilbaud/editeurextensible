@@ -29,8 +29,12 @@ public class ChargementFichier implements IChargeur{
 		return res;
 	}
 	
-	public static void main(String[] args){
+	public void demarrer(){
+		//ne fait rien
+	}
+	
+	/*public static void main(String[] args){
 		ChargementFichier cf = new ChargementFichier();
 		System.out.println(cf.recupererDonnees("/comptes/E096489E/Documents/Lorem.txt"));
-	}
+	}*/
 }
