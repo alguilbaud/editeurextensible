@@ -1,9 +1,28 @@
 package editeur;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 import chargement.IPlugin;
 
 public class Editeur implements IPlugin{
 	IAfficheur aff = null;
+	private JFrame fenetre;
+	
+	public Editeur(){
+		texte = "";
+		pressePapier = "";
+		debutCurseur = 0;
+		longueurSelection = 0;
+		
+		
+	}
 	
 	private String texte = "";
 	private String pressePapier = ""; //stocke ce qui est copié
@@ -17,7 +36,7 @@ public class Editeur implements IPlugin{
 	
 	public void demarrer(){
 		//TODO : à faire
-		
+		afficher();
 	}
 	
 	public void afficher(){
@@ -26,6 +45,9 @@ public class Editeur implements IPlugin{
 		}
 		else{
 			//TODO : affichage graphique standard à faire
+			fenetre = new JFrame("Sans titre");
+			init();
+			fenetre.setVisible(true);
 		}
 	}
 	
@@ -94,4 +116,29 @@ public class Editeur implements IPlugin{
 	}
 	
 	
+	private void init()
+	{
+		fenetre.setSize(400,200); //On donne une taille à notre fenêtre
+		fenetre.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
+		fenetre.setResizable(false); //On interdit la redimensionnement de la fenêtre
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.setBackground(Color.white);
+		
+		JTextArea textArea = new JTextArea("abcdefghi");
+		panel.add(textArea);
+		
+		JPanel b1 = new JPanel();
+		JButton bouton = new JButton("Mon bouton");
+		b1.add(bouton);
+		
+		JPanel b2 = new JPanel();
+		b2.setLayout(new BoxLayout(b2, BoxLayout.PAGE_AXIS));
+		b2.add(b1);
+		b2.add(panel);
+		
+		fenetre.setContentPane(b2);
+	}
 }
