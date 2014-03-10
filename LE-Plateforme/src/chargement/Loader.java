@@ -10,20 +10,29 @@ import java.net.URLClassLoader;
 public class Loader {
 	private HashMap<String,String> mapNomsTypes = new HashMap<String,String>();
 	private HashMap<String, IPlugin> mapPlugins = new HashMap<String, IPlugin>(); // pour le singleton
-	private static final String FILE_PATH = "/comptes/E096489E/workspace/LE-Plateforme/src/chargement/listePlugins.txt";
+	public String filePath;
 	private URLClassLoader cl;
+	
+	public Loader() {
+		try {
+			filePath = new File(".").getCanonicalPath() + "/chargement/listePlugins.txt";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void loadAuto() throws Throwable{
 		BufferedReader br = null;
 		String ligne = "";
-		br = new BufferedReader(new FileReader(FILE_PATH));
+		br = new BufferedReader(new FileReader(filePath));
 		ArrayList<URL> urls = new ArrayList<URL>();
+		String canonicalFilePath = "file://" + new File(".").getCanonicalFile().getParent();
 		//premier passage pour construire l'URLClassLoader
 		while((ligne = br.readLine()) != null){
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
 				
-				URL url = new URL("file:///comptes/E096489E/workspace" + args[2]);
+				URL url = new URL(canonicalFilePath + args[2]);
 				urls.add(url);
 			}
 		}
@@ -32,7 +41,7 @@ public class Loader {
 		URL[] tableau_url = new URL[urls.size()];
 		cl = new URLClassLoader(urls.toArray(tableau_url));
 		//deuxième passage pour charger les plugins de démarrage
-		br = new BufferedReader(new FileReader(FILE_PATH));
+		br = new BufferedReader(new FileReader(filePath));
 		while ((ligne = br.readLine()) != null){
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
@@ -78,5 +87,4 @@ public class Loader {
 		}
 		return noms;
 	}
-	
 }
