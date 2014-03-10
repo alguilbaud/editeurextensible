@@ -10,22 +10,14 @@ import java.net.URLClassLoader;
 public class Loader {
 	private HashMap<String,String> mapNomsTypes = new HashMap<String,String>();
 	private HashMap<String, IPlugin> mapPlugins = new HashMap<String, IPlugin>(); // pour le singleton
-	public String filePath;
 	private URLClassLoader cl;
-	
-	public Loader() {
-		try {
-			filePath = new File(".").getCanonicalFile().getParent() + "/LE-Plateforme/src/chargement/listePlugins.txt" ;
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-	}
 	
 	public void loadAuto() throws Throwable{
 		BufferedReader br = null;
 		String ligne = "";
+		String filePath = new File(".").getCanonicalFile().getParent() + "/LE-Plateforme/src/chargement/listePlugins.txt" ;
 		br = new BufferedReader(new FileReader(filePath));
-		ArrayList<URL> urls = new ArrayList<URL>();
+		ArrayList<URL> urls = new ArrayList<URL>();	
 		String canonicalFilePath = "file://" + new File(".").getCanonicalFile().getParent();
 		//premier passage pour construire l'URLClassLoader
 		while((ligne = br.readLine()) != null){
