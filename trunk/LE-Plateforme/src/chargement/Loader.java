@@ -15,10 +15,10 @@ public class Loader {
 	
 	public Loader() {
 		try {
-			filePath = new File(".").getCanonicalPath() + "/chargement/listePlugins.txt";
+			filePath = new File(".").getCanonicalFile().getParent() + "/LE-Plateforme/src/chargement/listePlugins.txt" ;
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	public void loadAuto() throws Throwable{
