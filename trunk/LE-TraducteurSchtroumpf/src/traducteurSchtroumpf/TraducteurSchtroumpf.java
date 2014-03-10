@@ -24,6 +24,10 @@ public class TraducteurSchtroumpf implements IModificateur{
 		return res;
 	}
 	
+	public void demarrer(){
+		//ne fait rien
+	}
+	
 	/*public static void main(String[] args){
 		TraducteurSchtroumpf ts = new  TraducteurSchtroumpf();
 		String texte = "Coucou, ceci est un test pour le plugin traducteur. \n" +
