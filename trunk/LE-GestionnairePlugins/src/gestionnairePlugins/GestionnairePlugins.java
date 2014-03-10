@@ -8,6 +8,10 @@ public class GestionnairePlugins implements IPlugin{
 		return "Je suis un gestionnaire de plugins.";
 	}
 	
+	public void demarrer(){
+		//ne fait rien
+	}
+	
 	//pour l'instant osef du gestionnaire, normalement c'est juste un affichage graphique, toutes les actions se font avec le loader
 	
 	/*
