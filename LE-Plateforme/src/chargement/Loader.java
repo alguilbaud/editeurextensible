@@ -42,6 +42,9 @@ public class Loader {
 					String nomPlugin = args[1];
 					IPlugin plug = loadPlugin(nomPlugin);
 					System.out.println(plug.informationsPlugin());
+					if(args[3].equals("application")){
+						plug.demarrer();
+					}
 					
 					/*else{
 						System.out.println("Le fichier des plugins est mal paramétré");
