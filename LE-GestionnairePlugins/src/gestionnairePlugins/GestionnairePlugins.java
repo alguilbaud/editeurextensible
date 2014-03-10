@@ -9,7 +9,7 @@ public class GestionnairePlugins implements IPlugin{
 	}
 	
 	public void demarrer(){
-		//ne fait rien
+		//à faire pour affichage graphique
 	}
 	
 	//pour l'instant osef du gestionnaire, normalement c'est juste un affichage graphique, toutes les actions se font avec le loader
