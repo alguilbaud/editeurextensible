@@ -44,7 +44,8 @@ public class Loader {
 					IPlugin plug = loadPlugin(nomPlugin);
 					System.out.println(plug.informationsPlugin());
 					if(args[3].equals("application")){
-						plug.demarrer();
+						IPluginApp plugApp = (IPluginApp) plug;
+						plugApp.demarrer(this);
 					}
 					
 					/*else{
