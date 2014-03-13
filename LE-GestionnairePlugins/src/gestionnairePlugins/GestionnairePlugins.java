@@ -1,18 +1,19 @@
 package gestionnairePlugins;
 
-import chargement.IPlugin;
+import chargement.IPluginTerminal;
 
-public class GestionnairePlugins implements IPlugin{
+public class GestionnairePlugins implements IPluginTerminal{
 	
 	public String informationsPlugin(){
 		return "Je suis un gestionnaire de plugins.";
 	}
 	
-	public void demarrer(){
-		//à faire pour affichage graphique
-	}
 	
 	//pour l'instant osef du gestionnaire, normalement c'est juste un affichage graphique, toutes les actions se font avec le loader
+	
+	public String nomBouton() {
+		return "Gérer Plugins";
+	}
 	
 	/*
 	@Override
