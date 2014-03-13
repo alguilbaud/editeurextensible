@@ -1,8 +1,8 @@
 package editeur;
 
-import chargement.IPlugin;
+import chargement.IPluginTerminal;
 
-public interface IChargeur extends IPlugin{
+public interface IChargeur extends IPluginTerminal{
 	public String recupererDonnees(String param);
 	
 }
