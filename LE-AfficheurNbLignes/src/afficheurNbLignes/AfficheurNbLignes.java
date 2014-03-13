@@ -1,5 +1,7 @@
 package afficheurNbLignes;
 
+import java.util.HashMap;
+
 import editeur.IAfficheur;
 
 public class AfficheurNbLignes implements IAfficheur{
@@ -14,9 +16,9 @@ public class AfficheurNbLignes implements IAfficheur{
 			System.out.println((i+1) + " " + lignes[i]);
 		}*/
 	}
-	
-	public void demarrer(){
-		//ne fait rien
+
+	public String nomBouton() {
+		return "Afficher numéros lignes";
 	}
 
 	
