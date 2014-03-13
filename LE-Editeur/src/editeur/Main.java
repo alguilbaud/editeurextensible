@@ -12,7 +12,9 @@ public class Main {
 	public static void main(String[] args) throws Throwable {
 		Loader l = new Loader();
 		l.loadAuto();
+//		Editeur ed = new Editeur();
 		
+//		ed.demarrer();
 		
 		/*ed.ecrire("abcdefghi");
 		

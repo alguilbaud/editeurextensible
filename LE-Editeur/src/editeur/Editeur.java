@@ -1,42 +1,50 @@
 package editeur;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.util.HashMap;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import chargement.IPlugin;
+import chargement.IPluginApp;
+import chargement.IPluginTerminal;
+import chargement.Loader;
 
-public class Editeur implements IPlugin{
+public class Editeur implements IPluginApp{
 	IAfficheur aff = null;
 	private JFrame fenetre;
+	private String texte = "";
+	private String pressePapier = ""; //stocke ce qui est copié
+	private int debutCurseur = 0; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
+	private int longueurSelection = 0;
+	private Loader loader;
+	
+	private HashMap<String,IPluginTerminal> plugins = new HashMap<String,IPluginTerminal>(); //contient les plugins avec leurs noms
+	private HashMap<String,String> fonctionnalitesPlugins = new HashMap<String,String>(); //contient nom plugin, nom méthode et nom bouton... à voir comment on stocke ça
+	//va servir pour créer les boutons et les listeners associés
+
+	
 	
 	public Editeur(){
 		texte = "";
 		pressePapier = "";
 		debutCurseur = 0;
 		longueurSelection = 0;
-		
-		
 	}
-	
-	private String texte = "";
-	private String pressePapier = ""; //stocke ce qui est copié
-	private int debutCurseur = 0; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
-	private int longueurSelection = 0;
-	
 	
 	public String informationsPlugin(){
 		return "Je suis un éditeur de texte.";
 	}
 	
-	public void demarrer(){
-		//TODO : à faire
+	public void demarrer(Loader l){
+		loader = l;
 		afficher();
+		
 	}
 	
 	public void afficher(){
@@ -45,8 +53,8 @@ public class Editeur implements IPlugin{
 		}
 		else{
 			//TODO : affichage graphique standard à faire
-			fenetre = new JFrame("Sans titre");
-			init();
+			fenetre = new JFrame("Editeur");
+			creationFenetre();
 			fenetre.setVisible(true);
 		}
 	}
@@ -115,30 +123,87 @@ public class Editeur implements IPlugin{
 		}
 	}
 	
-	
-	private void init()
+	/**
+	 * TODO Si possible, casser la méthodes en plusieurs méthodes plus courtes !
+	 */
+	private void creationFenetre()
 	{
 		fenetre.setSize(400,200); //On donne une taille à notre fenêtre
 		fenetre.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		fenetre.setResizable(false); //On interdit la redimensionnement de la fenêtre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		JMenuBar menubar = new JMenuBar();
+		JMenu menu1 = new JMenu("Fichier");
+		JMenu menu2 = new JMenu("Edition");
+		
+		JMenuItem nouveau = new JMenuItem("Nouveau");
+		JMenuItem ouvrir = new JMenuItem("Ouvrir");
+		JMenuItem quitter = new JMenuItem("Quitter");
+		JMenuItem copier = new JMenuItem("Copier");
+		JMenuItem coller = new JMenuItem("Coller");
+		
+		JTextArea textArea = new JTextArea();
+		
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-		panel.setBackground(Color.white);
+		fenetre.getContentPane().add(panel,"North");
+				/* Ajouter les choix au menu  */
+		menu1.add(nouveau);
+		menu1.add(ouvrir);
+		menu1.add(quitter);
+		menu2.add(copier);
+		menu2.add(coller);
+				/* Ajouter les menu sur la bar de menu */
+		menubar.add(menu1);
+		menubar.add(menu2);
+				/* Ajouter la bar du menu à la frame */
+		fenetre.setJMenuBar(menubar);
 		
-		JTextArea textArea = new JTextArea("abcdefghi");
-		panel.add(textArea);
+		JPanel textAreaPane = new JPanel();
+		textAreaPane.setLayout(new BorderLayout());
+		textAreaPane.add(textArea, "Center");
 		
-		JPanel b1 = new JPanel();
-		JButton bouton = new JButton("Mon bouton");
-		b1.add(bouton);
+		JPanel buttonPane = new JPanel();
+		JButton boutonCopier = new JButton("Copier");
+		JButton boutonCouper = new JButton("Couper");
+		JButton boutonColler = new JButton("Coller");
+		JButton boutonEffacer = new JButton("Effacer");
 		
-		JPanel b2 = new JPanel();
-		b2.setLayout(new BoxLayout(b2, BoxLayout.PAGE_AXIS));
-		b2.add(b1);
-		b2.add(panel);
+		buttonPane.add(boutonCopier);
+		buttonPane.add(boutonColler);
+		buttonPane.add(boutonCouper);
+		buttonPane.add(boutonEffacer);
 		
-		fenetre.setContentPane(b2);
+		JPanel globalPane = new JPanel();
+		globalPane.setLayout(new BorderLayout());
+		globalPane.add(textAreaPane, BorderLayout.CENTER);
+		globalPane.add(buttonPane, BorderLayout.NORTH);
+		
+		creationBoutonsPlugins(globalPane);
+		
+		fenetre.getContentPane().add(globalPane);
+		
 	}
+	
+	private void creationBoutonsPlugins(JPanel panel)
+	{
+		//crée tous les boutons en se basant sur la hashMap des fonctionnalités des plugins
+		JPanel pluginsPane = new JPanel();
+		pluginsPane.add(new JButton("Test"));
+		panel.add(pluginsPane, BorderLayout.SOUTH);
+	}
+	
+	
+	private void ajouterPlugin(IPluginTerminal plug){
+		//méthode appelée par le gestionnaire pour rajouter un plugin
+		//rajoute le plugin dans la Hashmap contenant les plugins
+		//fait un appel à la méthode ajouterFonctionnalites(plug)
+		//fermer la fenêtre et la relancer afficher
+	}
+	
+	private void ajouterFonctionnalites(IPluginTerminal plug){
+		//rajoute les fonctionnalités de plug dans la liste des fonctionnalités de l'éditeur
+	}
+	
 }

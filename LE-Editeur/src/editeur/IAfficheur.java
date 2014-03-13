@@ -1,8 +1,8 @@
 package editeur;
 
-import chargement.IPlugin;
+import chargement.IPluginTerminal;
 
-public interface IAfficheur extends IPlugin{
+public interface IAfficheur extends IPluginTerminal{
 	public void afficher(String texte);
 	
 }

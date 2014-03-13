@@ -1,8 +1,8 @@
 package editeur;
 
-import chargement.IPlugin;
+import chargement.IPluginTerminal;
 
-public interface IModificateur extends IPlugin{
+public interface IModificateur extends IPluginTerminal{
 	public String modifier(String texte);
 
 }
