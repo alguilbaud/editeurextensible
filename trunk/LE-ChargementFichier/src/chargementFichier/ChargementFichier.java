@@ -3,6 +3,7 @@ package chargementFichier;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 import editeur.IChargeur;
 
@@ -29,9 +30,10 @@ public class ChargementFichier implements IChargeur{
 		return res;
 	}
 	
-	public void demarrer(){
-		//ne fait rien
+	public String nomBouton() {
+		return "Charger via fichier";
 	}
+	
 	
 	/*public static void main(String[] args){
 		ChargementFichier cf = new ChargementFichier();
