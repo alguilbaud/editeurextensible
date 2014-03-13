@@ -23,9 +23,9 @@ public class TraducteurSchtroumpf implements IModificateur{
 		
 		return res;
 	}
-	
-	public void demarrer(){
-		//ne fait rien
+
+	public String nomBouton() {
+		return "Traduire en Schtroumpf";
 	}
 	
 	/*public static void main(String[] args){
