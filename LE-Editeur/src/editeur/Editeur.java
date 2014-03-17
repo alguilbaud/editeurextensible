@@ -1,6 +1,7 @@
 package editeur;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -183,11 +184,33 @@ public class Editeur implements IPluginApp{
 	
 	private void creationBoutonsPlugins(JPanel panel)
 	{
-		
 		//crée tous les boutons en se basant sur la hashMap des fonctionnalités des plugins
 		JPanel pluginsPane = new JPanel();
-		pluginsPane.add(new JButton("Test"));
+		creationBoutonsModificateurs(pluginsPane);
+		creationBoutonsChargeurs(pluginsPane);
+		creationBoutonsAfficheurs(pluginsPane);
 		panel.add(pluginsPane, BorderLayout.SOUTH);
+	}
+	
+	private void creationBoutonsAfficheurs(JPanel panel){
+		ArrayList<String> afficheurs = loader.getNomsPlugins("afficheur");
+		for(String nomAff : afficheurs){
+			panel.add(new JButton(nomAff));
+		}
+	}
+	
+	private void creationBoutonsModificateurs(JPanel panel){
+		ArrayList<String> modificateurs = loader.getNomsPlugins("modificateur");
+		for(String nomMod : modificateurs){
+			panel.add(new JButton(nomMod));
+		}
+	}
+	
+	private void creationBoutonsChargeurs(JPanel panel){
+		ArrayList<String> chargeurs = loader.getNomsPlugins("chargeur");
+		for(String nomCharg : chargeurs){
+			panel.add(new JButton(nomCharg));
+		}
 	}
 	
 	
