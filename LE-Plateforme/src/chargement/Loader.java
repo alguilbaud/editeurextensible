@@ -23,7 +23,7 @@ public class Loader {
 		while((ligne = br.readLine()) != null){
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
-				
+				mapNomsTypes.put(args[0], args[3]);
 				URL url = new URL(canonicalFilePath + args[2]);
 				urls.add(url);
 			}
@@ -37,7 +37,7 @@ public class Loader {
 		while ((ligne = br.readLine()) != null){
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
-				mapNomsTypes.put(args[0], args[3]);
+				
 				if (args[4].equals("1")){
 					//String typePlugin = args[3];
 					String nomPlugin = args[1];
