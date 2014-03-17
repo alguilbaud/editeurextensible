@@ -59,7 +59,7 @@ public class Loader {
 		br.close();
 	}
 	
-	private IPlugin loadPlugin(String nom) throws Throwable{
+	public IPlugin loadPlugin(String nom) throws Throwable{
 		if(mapPlugins.containsKey(nom)){
 			return mapPlugins.get(nom);
 		}
@@ -71,7 +71,7 @@ public class Loader {
 		}
 	}
 	
-	private ArrayList<String> getNomsPlugins(String type){
+	public ArrayList<String> getNomsPlugins(String type){
 		ArrayList<String> noms = new ArrayList<String>();
 		for (String n : mapNomsTypes.keySet()){
 			if(mapNomsTypes.get(n).equals(type)){
