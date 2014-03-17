@@ -24,11 +24,6 @@ public class Editeur implements IPluginApp{
 	private int longueurSelection = 0;
 	private Loader loader;
 	
-	private HashMap<String,IPluginTerminal> plugins = new HashMap<String,IPluginTerminal>(); //contient les plugins avec leurs noms
-	private HashMap<String,String> fonctionnalitesPlugins = new HashMap<String,String>(); //contient nom plugin, nom méthode et nom bouton... à voir comment on stocke ça
-	//va servir pour créer les boutons et les listeners associés
-
-	
 	
 	public Editeur(){
 		texte = "";
@@ -188,6 +183,7 @@ public class Editeur implements IPluginApp{
 	
 	private void creationBoutonsPlugins(JPanel panel)
 	{
+		
 		//crée tous les boutons en se basant sur la hashMap des fonctionnalités des plugins
 		JPanel pluginsPane = new JPanel();
 		pluginsPane.add(new JButton("Test"));
@@ -195,15 +191,13 @@ public class Editeur implements IPluginApp{
 	}
 	
 	
+	
+	
 	private void ajouterPlugin(IPluginTerminal plug){
 		//méthode appelée par le gestionnaire pour rajouter un plugin
 		//rajoute le plugin dans la Hashmap contenant les plugins
 		//fait un appel à la méthode ajouterFonctionnalites(plug)
 		//fermer la fenêtre et la relancer afficher
-	}
-	
-	private void ajouterFonctionnalites(IPluginTerminal plug){
-		//rajoute les fonctionnalités de plug dans la liste des fonctionnalités de l'éditeur
 	}
 	
 }
