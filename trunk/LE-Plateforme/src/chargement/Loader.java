@@ -72,6 +72,7 @@ public class Loader {
 	}
 	
 	public ArrayList<String> getNomsPlugins(String type){
+		System.out.println(mapNomsTypes);
 		ArrayList<String> noms = new ArrayList<String>();
 		for (String n : mapNomsTypes.keySet()){
 			if(mapNomsTypes.get(n).equals(type)){
