@@ -1,6 +1,8 @@
 package editeur;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -77,28 +79,32 @@ public class Editeur implements IPluginApp{
 	}
 	
 	public void effacer(){ //efface le caractère avant le curseur, ou la sélection s'il y en a une
+		System.out.println("Methode effacer() appelée");
 		if(longueurSelection>0){
 			texte = texte.substring(0,debutCurseur) + texte.substring(debutCurseur + longueurSelection);
 			longueurSelection = 0;
 		}
-		else{
+		else if(debutCurseur>0){
 			texte = texte.substring(0,debutCurseur-1) + texte.substring(debutCurseur);
 		}
 		
 	}
 	
 	public void copier(){ //met dans le presse papier ce qui est sélectionné
+		System.out.println("Methode copier() appelée");
 		if(longueurSelection>0){
 			pressePapier = texte.substring(debutCurseur,debutCurseur+longueurSelection);
 		}
 	}
 	
 	public void couper(){ //met dans le presse papier ce qui est sélectionné puis efface la sélection
+		System.out.println("Methode couper() appelée");
 		copier();
 		effacer();
 	}
 	
 	public void coller(){ //insère le contenu du presse papier à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
+		System.out.println("Methode coller() appelée");
 		if(pressePapier.length()>0){
 			ecrire(pressePapier);
 		}
@@ -124,78 +130,114 @@ public class Editeur implements IPluginApp{
 	 */
 	private void creationFenetre()
 	{
-		fenetre.setSize(400,200); //On donne une taille à notre fenêtre
+		fenetre.setSize(1200,600); //On donne une taille à notre fenêtre
 		fenetre.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		fenetre.setResizable(false); //On interdit la redimensionnement de la fenêtre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
 		JMenuBar menubar = new JMenuBar();
-		JMenu menu1 = new JMenu("Fichier");
-		JMenu menu2 = new JMenu("Edition");
 		
-		JMenuItem nouveau = new JMenuItem("Nouveau");
-		JMenuItem ouvrir = new JMenuItem("Ouvrir");
-		JMenuItem quitter = new JMenuItem("Quitter");
-		JMenuItem copier = new JMenuItem("Copier");
-		JMenuItem coller = new JMenuItem("Coller");
+		creationMenu(menubar);
+		
+		fenetre.setJMenuBar(menubar);
+		
+		//peut-être déléguer la création du textArea dans une autre méthode ?
 		
 		JTextArea textArea = new JTextArea();
+		//ajouter listener
 		
 		JPanel panel = new JPanel();
 		fenetre.getContentPane().add(panel,"North");
-				/* Ajouter les choix au menu  */
-		menu1.add(nouveau);
-		menu1.add(ouvrir);
-		menu1.add(quitter);
-		menu2.add(copier);
-		menu2.add(coller);
-				/* Ajouter les menu sur la bar de menu */
-		menubar.add(menu1);
-		menubar.add(menu2);
-				/* Ajouter la bar du menu à la frame */
-		fenetre.setJMenuBar(menubar);
 		
 		JPanel textAreaPane = new JPanel();
 		textAreaPane.setLayout(new BorderLayout());
 		textAreaPane.add(textArea, "Center");
 		
 		JPanel buttonPane = new JPanel();
-		JButton boutonCopier = new JButton("Copier");
-		JButton boutonCouper = new JButton("Couper");
-		JButton boutonColler = new JButton("Coller");
-		JButton boutonEffacer = new JButton("Effacer");
+		creationBoutonsStandards(buttonPane);
 		
-		buttonPane.add(boutonCopier);
-		buttonPane.add(boutonColler);
-		buttonPane.add(boutonCouper);
-		buttonPane.add(boutonEffacer);
+		JPanel pluginsPane = new JPanel();
+		creationBoutonsPlugins(pluginsPane);
 		
 		JPanel globalPane = new JPanel();
 		globalPane.setLayout(new BorderLayout());
 		globalPane.add(textAreaPane, BorderLayout.CENTER);
 		globalPane.add(buttonPane, BorderLayout.NORTH);
-		
-		creationBoutonsPlugins(globalPane);
+		globalPane.add(pluginsPane, BorderLayout.SOUTH);
 		
 		fenetre.getContentPane().add(globalPane);
 		
 	}
 	
+	private void creationMenu(JMenuBar menubar){
+		JMenuItem nouveau = new JMenuItem("Nouveau");
+		JMenuItem ouvrir = new JMenuItem("Ouvrir");
+		JMenuItem quitter = new JMenuItem("Quitter");
+		JMenuItem copier = new JMenuItem("Copier");
+		JMenuItem coller = new JMenuItem("Coller");
+		
+		JMenu menu1 = new JMenu("Fichier");
+		JMenu menu2 = new JMenu("Edition");
+		
+		menu1.add(nouveau);
+		menu1.add(ouvrir);
+		menu1.add(quitter);
+		menu2.add(copier);
+		menu2.add(coller);
+		
+		menubar.add(menu1);
+		menubar.add(menu2);
+	}
+	
+	private void creationBoutonsStandards(JPanel panel){
+		JButton boutonCopier = new JButton("Copier");
+		boutonCopier.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				copier();
+			} 
+		});
+		
+		JButton boutonCouper = new JButton("Couper");
+		boutonCouper.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				couper();
+			} 
+		});
+		
+		JButton boutonColler = new JButton("Coller");
+		boutonColler.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				coller();
+			} 
+		});
+		
+		JButton boutonEffacer = new JButton("Effacer");
+		boutonEffacer.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				effacer();
+			} 
+		});
+		
+		panel.add(boutonCopier);
+		panel.add(boutonColler);
+		panel.add(boutonCouper);
+		panel.add(boutonEffacer);
+		
+		
+	}
+	
 	private void creationBoutonsPlugins(JPanel panel)
 	{
-		//crée tous les boutons en se basant sur la hashMap des fonctionnalités des plugins
-		JPanel pluginsPane = new JPanel();
-		creationBoutonsModificateurs(pluginsPane);
-		creationBoutonsChargeurs(pluginsPane);
-		creationBoutonsAfficheurs(pluginsPane);
-		panel.add(pluginsPane, BorderLayout.SOUTH);
+		creationBoutonsModificateurs(panel);
+		creationBoutonsChargeurs(panel);
+		creationBoutonsAfficheurs(panel);
 	}
 	
 	private void creationBoutonsAfficheurs(JPanel panel){
 		ArrayList<String> afficheurs = loader.getNomsPlugins("afficheur");
 		for(String nomAff : afficheurs){
 			panel.add(new JButton(nomAff));
+			//ajouter listener
 		}
 	}
 	
@@ -203,6 +245,7 @@ public class Editeur implements IPluginApp{
 		ArrayList<String> modificateurs = loader.getNomsPlugins("modificateur");
 		for(String nomMod : modificateurs){
 			panel.add(new JButton(nomMod));
+			//ajouter listener
 		}
 	}
 	
@@ -210,6 +253,7 @@ public class Editeur implements IPluginApp{
 		ArrayList<String> chargeurs = loader.getNomsPlugins("chargeur");
 		for(String nomCharg : chargeurs){
 			panel.add(new JButton(nomCharg));
+			//ajouter listener
 		}
 	}
 	
