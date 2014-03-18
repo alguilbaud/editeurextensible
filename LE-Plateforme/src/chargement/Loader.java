@@ -42,7 +42,6 @@ public class Loader {
 					//String typePlugin = args[3];
 					String nomPlugin = args[1];
 					IPlugin plug = loadPlugin(nomPlugin);
-					System.out.println(plug.informationsPlugin());
 					if(args[3].equals("application")){
 						IPluginApp plugApp = (IPluginApp) plug;
 						plugApp.demarrer(this);
@@ -60,19 +59,20 @@ public class Loader {
 	}
 	
 	public IPlugin loadPlugin(String nom) throws Throwable{
+		IPlugin plug;
 		if(mapPlugins.containsKey(nom)){
-			return mapPlugins.get(nom);
+			plug = mapPlugins.get(nom);
 		}
 		else{
 			Class<?> classe = Class.forName(nom, true, cl);
-			IPlugin instPlugin = (IPlugin) classe.newInstance();
-			mapPlugins.put(nom,instPlugin);
-			return instPlugin;	
+			plug = (IPlugin) classe.newInstance();
+			mapPlugins.put(nom,plug);	
 		}
+		System.out.println(plug.informationsPlugin());
+		return plug;
 	}
 	
 	public ArrayList<String> getNomsPlugins(String type){
-		System.out.println(mapNomsTypes);
 		ArrayList<String> noms = new ArrayList<String>();
 		for (String n : mapNomsTypes.keySet()){
 			if(mapNomsTypes.get(n).equals(type)){
