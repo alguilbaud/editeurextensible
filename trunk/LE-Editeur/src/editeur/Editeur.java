@@ -3,6 +3,8 @@ package editeur;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import chargement.IPluginApp;
 import chargement.IPluginTerminal;
@@ -26,6 +30,7 @@ public class Editeur implements IPluginApp{
 	private int debutCurseur = 0; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
 	private int longueurSelection = 0;
 	private Loader loader;
+	private JTextArea textArea;
 	
 	
 	public Editeur(){
@@ -33,6 +38,14 @@ public class Editeur implements IPluginApp{
 		pressePapier = "";
 		debutCurseur = 0;
 		longueurSelection = 0;
+	}
+	
+	public String getTexte() {
+		return texte;
+	}
+
+	public void setTexte(String texte) {
+		this.texte = texte;
 	}
 	
 	public String informationsPlugin(){
@@ -50,7 +63,6 @@ public class Editeur implements IPluginApp{
 			aff.afficher(texte);
 		}
 		else{
-			//TODO : affichage graphique standard à faire
 			fenetre = new JFrame("Editeur");
 			creationFenetre();
 			fenetre.setVisible(true);
@@ -76,10 +88,12 @@ public class Editeur implements IPluginApp{
 		texte = part1 + chaine + part2;
 		debutCurseur = debutCurseur + chaine.length();
 		longueurSelection = 0;
+		System.out.println("Texte : "+texte);
+		textArea.setText(texte);
+		textArea.setCaretPosition(debutCurseur); //fait rien, pourquoi ?
 	}
 	
 	public void effacer(){ //efface le caractère avant le curseur, ou la sélection s'il y en a une
-		System.out.println("Methode effacer() appelée");
 		if(longueurSelection>0){
 			texte = texte.substring(0,debutCurseur) + texte.substring(debutCurseur + longueurSelection);
 			longueurSelection = 0;
@@ -87,24 +101,24 @@ public class Editeur implements IPluginApp{
 		else if(debutCurseur>0){
 			texte = texte.substring(0,debutCurseur-1) + texte.substring(debutCurseur);
 		}
-		
+		System.out.println("Texte : "+texte);
+		textArea.setText(texte);
+		textArea.setCaretPosition(debutCurseur); //fait rien, pourquoi ?
 	}
 	
 	public void copier(){ //met dans le presse papier ce qui est sélectionné
-		System.out.println("Methode copier() appelée");
 		if(longueurSelection>0){
 			pressePapier = texte.substring(debutCurseur,debutCurseur+longueurSelection);
+			System.out.println("Copié");
 		}
 	}
 	
 	public void couper(){ //met dans le presse papier ce qui est sélectionné puis efface la sélection
-		System.out.println("Methode couper() appelée");
 		copier();
 		effacer();
 	}
 	
 	public void coller(){ //insère le contenu du presse papier à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
-		System.out.println("Methode coller() appelée");
 		if(pressePapier.length()>0){
 			ecrire(pressePapier);
 		}
@@ -141,17 +155,12 @@ public class Editeur implements IPluginApp{
 		
 		fenetre.setJMenuBar(menubar);
 		
-		//peut-être déléguer la création du textArea dans une autre méthode ?
-		
-		JTextArea textArea = new JTextArea();
-		//ajouter listener
-		
 		JPanel panel = new JPanel();
 		fenetre.getContentPane().add(panel,"North");
 		
 		JPanel textAreaPane = new JPanel();
 		textAreaPane.setLayout(new BorderLayout());
-		textAreaPane.add(textArea, "Center");
+		creationTextArea(textAreaPane);
 		
 		JPanel buttonPane = new JPanel();
 		creationBoutonsStandards(buttonPane);
@@ -167,6 +176,25 @@ public class Editeur implements IPluginApp{
 		
 		fenetre.getContentPane().add(globalPane);
 		
+	}
+	
+	private void creationTextArea(JPanel panel){
+		textArea = new JTextArea();
+		textArea.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent arg0) {
+				selectionner(arg0.getDot(),arg0.getMark());
+			}
+		});
+		textArea.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent arg0) {
+				String texte = textArea.getText();
+				setTexte(texte);
+			}
+			public void keyTyped(KeyEvent arg0) {}
+		});
+		
+		panel.add(textArea, "Center");		
 	}
 	
 	private void creationMenu(JMenuBar menubar){
