@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 
 public class Loader {
 	private HashMap<String,String> mapNomsTypes = new HashMap<String,String>();
+	private HashMap<String,String> mapNomsLocations = new HashMap<String,String>();
 	private HashMap<String, IPlugin> mapPlugins = new HashMap<String, IPlugin>(); // pour le singleton
 	private URLClassLoader cl;
 	
@@ -24,6 +25,7 @@ public class Loader {
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
 				mapNomsTypes.put(args[0], args[3]);
+				mapNomsLocations.put(args[0], args[1]);
 				URL url = new URL(canonicalFilePath + args[2]);
 				urls.add(url);
 			}
@@ -40,7 +42,7 @@ public class Loader {
 				
 				if (args[4].equals("1")){
 					//String typePlugin = args[3];
-					String nomPlugin = args[1];
+					String nomPlugin = args[0];
 					IPlugin plug = loadPlugin(nomPlugin);
 					if(args[3].equals("application")){
 						IPluginApp plugApp = (IPluginApp) plug;
@@ -64,7 +66,8 @@ public class Loader {
 			plug = mapPlugins.get(nom);
 		}
 		else{
-			Class<?> classe = Class.forName(nom, true, cl);
+			String location = mapNomsLocations.get(nom);
+			Class<?> classe = Class.forName(location, true, cl);
 			plug = (IPlugin) classe.newInstance();
 			mapPlugins.put(nom,plug);	
 		}
