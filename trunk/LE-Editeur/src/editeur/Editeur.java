@@ -1,6 +1,7 @@
 package editeur;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,10 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
@@ -125,6 +128,9 @@ public class Editeur implements IPluginApp{
 	}
 	
 	public void selectionner(int debut, int fin){
+		//TODO: tester si fin > debut
+		System.out.println(debut);
+		System.out.println(fin);
 		if(debut<0){
 			debutCurseur = 0;
 		}
@@ -182,6 +188,8 @@ public class Editeur implements IPluginApp{
 		textArea = new JTextArea();
 		textArea.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
+				System.out.println("Dot "+arg0.getDot());
+				System.out.println("Mark "+arg0.getMark());
 				selectionner(arg0.getDot(),arg0.getMark());
 			}
 		});
@@ -264,7 +272,20 @@ public class Editeur implements IPluginApp{
 	private void creationBoutonsAfficheurs(JPanel panel){
 		ArrayList<String> afficheurs = loader.getNomsPlugins("afficheur");
 		for(String nomAff : afficheurs){
-			panel.add(new JButton(nomAff));
+			final JButton jb = new JButton(nomAff);
+			jb.addActionListener(new ActionListener() { 
+				public void actionPerformed(ActionEvent e) { 	
+					try {
+						IAfficheur plug = (IAfficheur) loader.loadPlugin(jb.getText());
+						// créer nouveau pannel contenant le nb de lignes
+						plug.afficher(null);
+					} catch (Throwable e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} 
+			});
+			panel.add(jb);
 			//ajouter listener
 		}
 	}
@@ -272,7 +293,22 @@ public class Editeur implements IPluginApp{
 	private void creationBoutonsModificateurs(JPanel panel){
 		ArrayList<String> modificateurs = loader.getNomsPlugins("modificateur");
 		for(String nomMod : modificateurs){
-			panel.add(new JButton(nomMod));
+			final JButton jb = new JButton(nomMod);
+			jb.addActionListener(new ActionListener() { 
+				public void actionPerformed(ActionEvent e) { 	
+					try {
+						IModificateur plug = (IModificateur) loader.loadPlugin(jb.getText());
+						String txt = plug.modifier(texte.substring(debutCurseur, longueurSelection));
+						if(txt!=null){
+							ecrire(txt);
+						}
+					} catch (Throwable e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} 
+			});
+			panel.add(jb);
 			//ajouter listener
 		}
 	}
@@ -280,7 +316,31 @@ public class Editeur implements IPluginApp{
 	private void creationBoutonsChargeurs(JPanel panel){
 		ArrayList<String> chargeurs = loader.getNomsPlugins("chargeur");
 		for(String nomCharg : chargeurs){
-			panel.add(new JButton(nomCharg));
+			final JButton jb = new JButton(nomCharg);
+			jb.addActionListener(new ActionListener() { 
+				public void actionPerformed(ActionEvent e) { 	
+					try {
+						IChargeur plug = (IChargeur) loader.loadPlugin(jb.getText());
+						JFileChooser jfc = new JFileChooser();
+						JPanel panelParcourir = new JPanel();
+						int retour = jfc.showOpenDialog(panelParcourir);
+						String cheminFichier = "";
+						if(retour==JFileChooser.APPROVE_OPTION){
+							// un fichier a été choisi (sortie par OK)
+							// nom du fichier  choisi 
+							jfc.getSelectedFile().getName();
+							// chemin absolu du fichier choisi
+							cheminFichier = jfc.getSelectedFile().getAbsolutePath();
+							System.out.println(cheminFichier);
+						}
+						ecrire(plug.recupererDonnees(""));
+					} catch (Throwable e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} 
+			});
+			panel.add(jb);
 			//ajouter listener
 		}
 	}
