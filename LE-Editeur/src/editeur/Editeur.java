@@ -1,13 +1,12 @@
 package editeur;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -15,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -144,9 +142,10 @@ public class Editeur implements IPluginApp{
 	
 	private void creationFenetre()
 	{
-		fenetre.setSize(1200,600); //On donne une taille à notre fenêtre
+		fenetre.setPreferredSize(new Dimension(1200,600)); //On donne une taille à notre fenêtre
+		fenetre.setExtendedState(fenetre.getExtendedState() |JFrame.MAXIMIZED_BOTH);
 		fenetre.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		fenetre.setResizable(false); //On interdit la redimensionnement de la fenêtre
+		fenetre.setResizable(true); //On interdit la redimensionnement de la fenêtre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menubar = new JMenuBar();
@@ -160,12 +159,15 @@ public class Editeur implements IPluginApp{
 		
 		JPanel textAreaPane = new JPanel();
 		textAreaPane.setLayout(new BorderLayout());
+		textAreaPane.setPreferredSize(new Dimension(1200,600));
 		creationTextArea(textAreaPane);
 		
 		JPanel buttonPane = new JPanel();
+		buttonPane.setPreferredSize(new Dimension(1200,40));
 		creationBoutonsStandards(buttonPane);
 		
 		JPanel pluginsPane = new JPanel();
+		pluginsPane.setPreferredSize(new Dimension(1200,100));
 		creationBoutonsPlugins(pluginsPane);
 		
 		JPanel globalPane = new JPanel();
@@ -175,7 +177,7 @@ public class Editeur implements IPluginApp{
 		globalPane.add(pluginsPane, BorderLayout.SOUTH);
 		
 		fenetre.getContentPane().add(globalPane);
-		
+		fenetre.pack();
 	}
 	
 	private void creationTextArea(JPanel panel){
