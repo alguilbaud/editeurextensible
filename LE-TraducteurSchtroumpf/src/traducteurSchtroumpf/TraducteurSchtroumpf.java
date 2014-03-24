@@ -12,7 +12,6 @@ public class TraducteurSchtroumpf implements IModificateur{
 		String[] mots = texte.split(" ");
 		int i = (int) Math.round(Math.random()*5+1);
 		while (i<mots.length){
-			//à améliorer pour garder les \n et autres ponctuations
 			mots[i] = "schtroumpf";
 			i += (int) Math.round(Math.random()*5+1);
 		}
