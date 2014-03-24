@@ -320,7 +320,6 @@ public class Editeur implements IPluginApp{
 							jfc.getSelectedFile().getName();
 							// chemin absolu du fichier choisi
 							cheminFichier = jfc.getSelectedFile().getAbsolutePath();
-							System.out.println(cheminFichier);
 						}
 						ecrire(plug.recupererDonnees(cheminFichier));
 					} catch (Throwable e1) {
