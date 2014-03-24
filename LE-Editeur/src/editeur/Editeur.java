@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -91,7 +92,6 @@ public class Editeur implements IPluginApp{
 		texte = part1 + chaine + part2;
 		debutCurseur = debutCurseur + chaine.length();
 		longueurSelection = 0;
-		System.out.println("Texte : "+texte);
 		textArea.setText(texte);
 		textArea.setCaretPosition(debutCurseur); //fait rien, pourquoi ?
 	}
@@ -128,26 +128,20 @@ public class Editeur implements IPluginApp{
 	}
 	
 	public void selectionner(int debut, int fin){
-		//TODO: tester si fin > debut
-		System.out.println(debut);
-		System.out.println(fin);
+		if(fin < debut){
+			int i = debut;
+			debut = fin;
+			fin = i;
+		}
 		if(debut<0){
 			debutCurseur = 0;
 		}
 		else{
 			debutCurseur = debut;
 		}
-		if(fin>texte.length()){
-			longueurSelection = texte.length() - debutCurseur;
-		}
-		else{
-			longueurSelection = fin - debutCurseur;
-		}
+		longueurSelection = fin - debutCurseur;
 	}
 	
-	/**
-	 * TODO Si possible, casser la méthodes en plusieurs méthodes plus courtes !
-	 */
 	private void creationFenetre()
 	{
 		fenetre.setSize(1200,600); //On donne une taille à notre fenêtre
@@ -186,10 +180,9 @@ public class Editeur implements IPluginApp{
 	
 	private void creationTextArea(JPanel panel){
 		textArea = new JTextArea();
+		
 		textArea.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
-				System.out.println("Dot "+arg0.getDot());
-				System.out.println("Mark "+arg0.getMark());
 				selectionner(arg0.getDot(),arg0.getMark());
 			}
 		});
@@ -201,8 +194,8 @@ public class Editeur implements IPluginApp{
 			}
 			public void keyTyped(KeyEvent arg0) {}
 		});
-		
-		panel.add(textArea, "Center");		
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		panel.add(scrollPane, "Center");		
 	}
 	
 	private void creationMenu(JMenuBar menubar){
@@ -280,13 +273,11 @@ public class Editeur implements IPluginApp{
 						// créer nouveau pannel contenant le nb de lignes
 						plug.afficher(null);
 					} catch (Throwable e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} 
 			});
 			panel.add(jb);
-			//ajouter listener
 		}
 	}
 	
@@ -298,18 +289,16 @@ public class Editeur implements IPluginApp{
 				public void actionPerformed(ActionEvent e) { 	
 					try {
 						IModificateur plug = (IModificateur) loader.loadPlugin(jb.getText());
-						String txt = plug.modifier(texte.substring(debutCurseur, longueurSelection));
+						String txt = plug.modifier(texte.substring(debutCurseur, debutCurseur+longueurSelection));
 						if(txt!=null){
 							ecrire(txt);
 						}
 					} catch (Throwable e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} 
 			});
 			panel.add(jb);
-			//ajouter listener
 		}
 	}
 	
@@ -333,15 +322,13 @@ public class Editeur implements IPluginApp{
 							cheminFichier = jfc.getSelectedFile().getAbsolutePath();
 							System.out.println(cheminFichier);
 						}
-						ecrire(plug.recupererDonnees(""));
+						ecrire(plug.recupererDonnees(cheminFichier));
 					} catch (Throwable e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} 
 			});
 			panel.add(jb);
-			//ajouter listener
 		}
 	}
 	
