@@ -145,7 +145,7 @@ public class Editeur implements IPluginApp{
 		fenetre.setPreferredSize(new Dimension(1200,600)); //On donne une taille à notre fenêtre
 		fenetre.setExtendedState(fenetre.getExtendedState() |JFrame.MAXIMIZED_BOTH);
 		fenetre.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		fenetre.setResizable(true); //On interdit la redimensionnement de la fenêtre
+		fenetre.setResizable(true); 
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menubar = new JMenuBar();
