@@ -17,10 +17,6 @@ public class AfficheurNbLignes implements IAfficheur{
 		}*/
 	}
 
-	public String nomBouton() {
-		return "Afficher numéros lignes";
-	}
-
 	
 	/*public static void main(String[] args){
 		AfficheurNbLignes aff = new AfficheurNbLignes();
