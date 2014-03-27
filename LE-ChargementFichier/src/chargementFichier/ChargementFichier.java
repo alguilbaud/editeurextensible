@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+
 import editeur.IChargeur;
 
 public class ChargementFichier implements IChargeur{
@@ -13,25 +16,35 @@ public class ChargementFichier implements IChargeur{
 		return "Je suis un chargeur de données à partir d'un fichier.";
 	}
 
-	public String recupererDonnees(String param) {
+	public String recupererDonnees() {
+		
+		JFileChooser jfc = new JFileChooser();
+		JPanel panelParcourir = new JPanel();
+		int retour = jfc.showOpenDialog(panelParcourir);
+		String cheminFichier = "";
+		if(retour==JFileChooser.APPROVE_OPTION){
+			// un fichier a été choisi (sortie par OK)
+			// nom du fichier  choisi 
+			jfc.getSelectedFile().getName();
+			// chemin absolu du fichier choisi
+			cheminFichier = jfc.getSelectedFile().getAbsolutePath();
+		}
 		String res = "";
 		String ligne = "";
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(param));
+			br = new BufferedReader(new FileReader(cheminFichier));
 			while ((ligne = br.readLine()) != null){
 				 res = res.concat("\n"+ligne);
 			}
 			br.close();
-			res = res.substring(1);
+			if(!res.equals("")){
+				res = res.substring(1);
+			}
 		} catch (IOException e) {
 			System.out.println("Fichier non trouvé.");
 		}
 		return res;
-	}
-	
-	public String nomBouton() {
-		return "Charger via fichier";
 	}
 	
 	
