@@ -9,11 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -69,19 +65,6 @@ public class Editeur implements IPluginApp{
 			creationFenetre();
 			fenetre.setVisible(true);
 		}
-	}
-	
-	public void positionnerCurseur(int pos){
-		if(pos<0){
-			debutCurseur = 0;
-		}
-		else if(pos>texte.length()){
-			debutCurseur = texte.length();
-		}
-		else{
-			debutCurseur = pos;
-		}
-		longueurSelection = 0;
 	}
 	
 	public void ecrire(String chaine){ //insère la chaîne à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
