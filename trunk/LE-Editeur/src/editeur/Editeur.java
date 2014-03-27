@@ -148,12 +148,6 @@ public class Editeur implements IPluginApp{
 		fenetre.setResizable(true); 
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JMenuBar menubar = new JMenuBar();
-		
-		creationMenu(menubar);
-		
-		fenetre.setJMenuBar(menubar);
-		
 		JPanel panel = new JPanel();
 		fenetre.getContentPane().add(panel,"North");
 		
@@ -200,25 +194,7 @@ public class Editeur implements IPluginApp{
 		panel.add(scrollPane, "Center");		
 	}
 	
-	private void creationMenu(JMenuBar menubar){
-		JMenuItem nouveau = new JMenuItem("Nouveau");
-		JMenuItem ouvrir = new JMenuItem("Ouvrir");
-		JMenuItem quitter = new JMenuItem("Quitter");
-		JMenuItem copier = new JMenuItem("Copier");
-		JMenuItem coller = new JMenuItem("Coller");
-		
-		JMenu menu1 = new JMenu("Fichier");
-		JMenu menu2 = new JMenu("Edition");
-		
-		menu1.add(nouveau);
-		menu1.add(ouvrir);
-		menu1.add(quitter);
-		menu2.add(copier);
-		menu2.add(coller);
-		
-		menubar.add(menu1);
-		menubar.add(menu2);
-	}
+	
 	
 	private void creationBoutonsStandards(JPanel panel){
 		JButton boutonCopier = new JButton("Copier");
