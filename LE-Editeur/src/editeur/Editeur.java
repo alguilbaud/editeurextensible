@@ -312,19 +312,11 @@ public class Editeur implements IPluginApp{
 				public void actionPerformed(ActionEvent e) { 	
 					try {
 						IChargeur plug = (IChargeur) loader.loadPlugin(jb.getText());
-						JFileChooser jfc = new JFileChooser();
-						JPanel panelParcourir = new JPanel();
-						int retour = jfc.showOpenDialog(panelParcourir);
-						String cheminFichier = "";
-						if(retour==JFileChooser.APPROVE_OPTION){
-							// un fichier a été choisi (sortie par OK)
-							// nom du fichier  choisi 
-							jfc.getSelectedFile().getName();
-							// chemin absolu du fichier choisi
-							cheminFichier = jfc.getSelectedFile().getAbsolutePath();
+						String txt = plug.recupererDonnees();
+						if(txt!=null && !txt.equals("")){
+							ecrire(txt);
 						}
-						ecrire(plug.recupererDonnees(cheminFichier));
-					} catch (Throwable e1) {
+					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				} 
