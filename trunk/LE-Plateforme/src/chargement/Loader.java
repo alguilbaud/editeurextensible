@@ -13,7 +13,7 @@ public class Loader {
 	private HashMap<String, IPlugin> mapPlugins = new HashMap<String, IPlugin>(); // pour le singleton
 	private URLClassLoader cl;
 	
-	public void loadAuto() throws Throwable{
+	public void loadAuto() throws Exception{
 		BufferedReader br = null;
 		String ligne = "";
 		String filePath = new File(".").getCanonicalFile().getParent() + "/LE-Plateforme/src/chargement/listePlugins.txt" ;
@@ -60,7 +60,7 @@ public class Loader {
 		br.close();
 	}
 	
-	public IPlugin loadPlugin(String nom) throws Throwable{
+	public IPlugin loadPlugin(String nom) throws Exception{
 		IPlugin plug;
 		if(mapPlugins.containsKey(nom)){
 			plug = mapPlugins.get(nom);
