@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,7 +22,6 @@ import chargement.IPluginTerminal;
 import chargement.Loader;
 
 public class Editeur implements IPluginApp{
-	IAfficheur aff = null;
 	private JFrame fenetre;
 	private String texte = "";
 	private String pressePapier = ""; //stocke ce qui est copié
@@ -29,6 +29,7 @@ public class Editeur implements IPluginApp{
 	private int longueurSelection = 0;
 	private Loader loader;
 	private JTextArea textArea;
+	private JPanel textAreaPane;
 	
 	
 	public Editeur(){
@@ -57,14 +58,9 @@ public class Editeur implements IPluginApp{
 	}
 	
 	public void afficher(){
-		if (aff!=null){
-			aff.afficher(texte);
-		}
-		else{
-			fenetre = new JFrame("Editeur");
-			creationFenetre();
-			fenetre.setVisible(true);
-		}
+		fenetre = new JFrame("Editeur");
+		creationFenetre();
+		fenetre.setVisible(true);
 	}
 	
 	public void ecrire(String chaine){ //insère la chaîne à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
@@ -134,7 +130,7 @@ public class Editeur implements IPluginApp{
 		JPanel panel = new JPanel();
 		fenetre.getContentPane().add(panel,"North");
 		
-		JPanel textAreaPane = new JPanel();
+		textAreaPane = new JPanel();
 		textAreaPane.setLayout(new BorderLayout());
 		textAreaPane.setPreferredSize(new Dimension(1200,600));
 		creationTextArea(textAreaPane);
@@ -231,9 +227,15 @@ public class Editeur implements IPluginApp{
 				public void actionPerformed(ActionEvent e) { 	
 					try {
 						IAfficheur plug = (IAfficheur) loader.loadPlugin(jb.getText());
-						// créer nouveau pannel contenant le nb de lignes
-						plug.afficher(null);
-					} catch (Throwable e1) {
+						JComponent comp = plug.creerJComponent(textArea);
+						String position = plug.getPosition();
+						if(position.equals("North") || position.equals("East") || position.equals("South") || position.equals("West")){
+							textAreaPane.add(comp, position);
+						}
+						else{
+							System.out.println("La position de l'afficheur n'est pas valide.");
+						}
+					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				} 
@@ -254,7 +256,7 @@ public class Editeur implements IPluginApp{
 						if(txt!=null){
 							ecrire(txt);
 						}
-					} catch (Throwable e1) {
+					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				} 
@@ -282,16 +284,6 @@ public class Editeur implements IPluginApp{
 			});
 			panel.add(jb);
 		}
-	}
-	
-	
-	
-	
-	private void ajouterPlugin(IPluginTerminal plug){
-		//méthode appelée par le gestionnaire pour rajouter un plugin
-		//rajoute le plugin dans la Hashmap contenant les plugins
-		//fait un appel à la méthode ajouterFonctionnalites(plug)
-		//fermer la fenêtre et la relancer afficher
 	}
 	
 }

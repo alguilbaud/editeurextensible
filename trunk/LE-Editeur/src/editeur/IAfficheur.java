@@ -1,10 +1,13 @@
 package editeur;
 
 import javax.swing.JComponent;
+import javax.swing.JTextArea;
 
 import chargement.IPluginTerminal;
 
 public interface IAfficheur extends IPluginTerminal{
-	public void afficher(String s);
+	public JComponent creerJComponent(JTextArea textArea);
+	
+	public String getPosition();
 	
 }
