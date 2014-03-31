@@ -17,6 +17,7 @@ public class AfficheurComptage implements IAfficheur{
 
 	public JComponent creerJComponent(JTextArea textArea) {
 		final JTextArea infos = new JTextArea("Taille : 0 / Mots : 0");
+		infos.setEditable(false);
 		final Document doc = textArea.getDocument();
 		doc.addDocumentListener(new DocumentListener(){
 			public String creerString(){
