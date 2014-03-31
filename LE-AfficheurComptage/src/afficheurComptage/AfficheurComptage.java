@@ -12,7 +12,9 @@ public class AfficheurComptage implements IAfficheur{
 	}
 
 	public JComponent creerJComponent(JTextArea textArea) {
-		return null;
+		JTextArea infos = new JTextArea("Il y a 0 mots pour une taille totale de 0 caractères.");
+		
+		return infos;
 	}
 
 	public String getPosition() {
