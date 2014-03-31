@@ -1,17 +1,21 @@
 package editeur;
 
 import chargement.Loader;
-import editeur.Editeur;
 
 public class Main {
 
 	/**
 	 * @param args
-	 * @throws Throwable 
 	 */
-	public static void main(String[] args) throws Throwable {
-		Loader l = new Loader();
-		l.loadAuto();
+	public static void main(String[] args) {
+		try{
+			Loader l = new Loader();
+			l.loadAuto();
+		}
+		catch (Exception e){
+			System.out.println("Une erreur est survenue.");
+			e.printStackTrace();
+		}
 	}
 
 }
