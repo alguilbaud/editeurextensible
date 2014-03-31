@@ -39,21 +39,13 @@ public class Loader {
 		while ((ligne = br.readLine()) != null){
 			if(ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
-				
 				if (args[4].equals("1")){
-					//String typePlugin = args[3];
 					String nomPlugin = args[0];
 					IPlugin plug = loadPlugin(nomPlugin);
 					if(args[3].equals("application")){
 						IPluginApp plugApp = (IPluginApp) plug;
 						plugApp.demarrer(this);
-					}
-					
-					/*else{
-						System.out.println("Le fichier des plugins est mal paramétré");
-						throw new Exception();
-					}*/
-									
+					}					
 				}
 			}
 		}
@@ -69,9 +61,9 @@ public class Loader {
 			String location = mapNomsLocations.get(nom);
 			Class<?> classe = Class.forName(location, true, cl);
 			plug = (IPlugin) classe.newInstance();
-			mapPlugins.put(nom,plug);	
+			mapPlugins.put(nom,plug);
+			System.out.println("Chargement du plugin "+nom);
 		}
-		System.out.println(plug.informationsPlugin());
 		return plug;
 	}
 	
