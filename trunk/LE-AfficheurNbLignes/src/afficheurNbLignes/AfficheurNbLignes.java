@@ -1,6 +1,7 @@
 package afficheurNbLignes;
 
-import java.util.HashMap;
+import javax.swing.JComponent;
+import javax.swing.JTextArea;
 
 import editeur.IAfficheur;
 
@@ -10,16 +11,12 @@ public class AfficheurNbLignes implements IAfficheur{
 		return "Je suis un afficheur avec numéros de lignes.";
 	}
 
-	public void afficher(String texte) {
-		/*String[] lignes = texte.split("\n");
-		for(int i=0; i<lignes.length;i++){
-			System.out.println((i+1) + " " + lignes[i]);
-		}*/
+	public JComponent creerJComponent(JTextArea textArea) {
+		
+		return null;
 	}
 
-	
-	/*public static void main(String[] args){
-		AfficheurNbLignes aff = new AfficheurNbLignes();
-		aff.afficher("bla\nblabla\nblablabla\nc fini");
-	}*/
+	public String getPosition(){
+		return "West";
+	}
 }
