@@ -232,7 +232,6 @@ public class Editeur implements IPluginApp{
 						if(position.equals("North") || position.equals("East") || position.equals("South") || position.equals("West")){
 							textAreaPane.add(comp, position);
 							textAreaPane.revalidate();
-							textArea.revalidate();
 						}
 						else{
 							System.out.println("La position de l'afficheur n'est pas valide.");
