@@ -18,7 +18,6 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import chargement.IPluginApp;
-import chargement.IPluginTerminal;
 import chargement.Loader;
 
 public class Editeur implements IPluginApp{
