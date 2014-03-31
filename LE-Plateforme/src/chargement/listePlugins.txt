@@ -1,7 +1,6 @@
 #Nom,ClassName,ClassPath,Rôle,ChargementAuto(1 si oui, 0 sinon)
 #Attention, ne pas donner 2 noms identiques !
 Editeur de texte,editeur.Editeur,/LE-Editeur/bin/,application,1
-Gestionnaire de plugins,gestionnairePlugins.GestionnairePlugins,/LE-GestionnairePlugins/bin/,gestionnaire,0
-Afficheur du nombre de lignes,afficheurNbLignes.AfficheurNbLignes,/LE-AfficheurNbLignes/bin/,afficheur,0
+Afficheur comptage,afficheurComptage.AfficheurComptage,/LE-AfficheurComptage/bin/,afficheur,0
 Chargeur de fichier,chargementFichier.ChargementFichier,/LE-ChargementFichier/bin/,chargeur,0
 Traducteur Schtroumpf,traducteurSchtroumpf.TraducteurSchtroumpf,/LE-TraducteurSchtroumpf/bin/,modificateur,0
