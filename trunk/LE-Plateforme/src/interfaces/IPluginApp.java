@@ -1,4 +1,6 @@
-package chargement;
+package interfaces;
+
+import chargement.Loader;
 
 public interface IPluginApp extends IPlugin {
 	
