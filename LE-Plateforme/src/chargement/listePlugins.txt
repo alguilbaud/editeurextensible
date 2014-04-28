@@ -1,5 +1,6 @@
 #Nom,ClassName(package.class),ClassPath,Rôle,ChargementAuto(1 si oui, 0 sinon)
 #Attention, ne pas donner 2 noms identiques !
+
 Editeur de texte,editeur.Editeur,/LE-Editeur/bin/,application,1
 Afficheur comptage,afficheurComptage.AfficheurComptage,/LE-AfficheurComptage/bin/,afficheur,0
 Chargeur de fichier,chargementFichier.ChargementFichier,/LE-ChargementFichier/bin/,chargeur,0
