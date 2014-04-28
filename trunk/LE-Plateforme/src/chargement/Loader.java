@@ -10,7 +10,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * La classe Loader 
+ * La classe Loader permet la gestion de l'instanciation des plugins, ainsi que l'obtension de leurs instances.
  * @author Benjamin Grouhan, Alexis Guilbaud, Kevin Mokili
  *
  */
@@ -40,7 +40,7 @@ public class Loader {
 	 * à 1 (en les stockant dans mapPlugins) et également appeler la méthode
 	 * démarrer sur ceux qui sont de type application.</li>
 	 * </ul>
-	 * 	 * @throws Exception
+	 * @throws Exception
 	 */
 	public void loadAuto() throws Exception{
 		BufferedReader br = null;
