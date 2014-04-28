@@ -1,34 +1,30 @@
 package traducteurSchtroumpf;
 
 import interfaces.IModificateur;
+import java.util.Random;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TraducteurSchtroumpf implements IModificateur{
 	
-	public String informationsPlugin(){
-		return "Je suis un traducteur en Schtroumpf.";
-	}
-	
 	public String modifier(String texte){
-		String[] mots = texte.split(" ");
-		int i = (int) Math.round(Math.random()*5+1);
-		while (i<mots.length){
-			mots[i] = "schtroumpf";
-			i += (int) Math.round(Math.random()*5+1);
-		}
-		String res = "";
-		for(int j=0;j<mots.length;j++ ){
-			res = res.concat(mots[j]+" ");
-		}
-		
-		return res;
+		Pattern p = Pattern.compile("\\w+");
+	    Matcher m = p.matcher(texte);
+	    StringBuffer sb = new StringBuffer();
+	    Random rand = new Random();
+	    int r = rand.nextInt(5);
+	    int i = 0;
+	    while(m.find()){
+	    	if(i==r){
+	    		m.appendReplacement(sb,"schtroumpf");
+	    		i = 0;
+	    		r = rand.nextInt(5);
+	    	}
+	    	else{
+	    		i++;
+	    	}    
+	    }
+	    m.appendTail(sb);
+	    return sb.toString();
 	}
-	
-	/*public static void main(String[] args){
-		TraducteurSchtroumpf ts = new  TraducteurSchtroumpf();
-		String texte = "Coucou, ceci est un test pour le plugin traducteur. \n" +
-				"J'espère que tout va bien marcher, parce que quand même, traduire, c'est trop génial.\n" +
-				"Ah oui, au fait, hier j'ai mangé une pomme et elle était bonne.";
-		texte = ts.modifier(texte);
-		System.out.println(texte);
-	}*/
 }
