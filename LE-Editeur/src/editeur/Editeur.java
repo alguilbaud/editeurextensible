@@ -1,5 +1,10 @@
 package editeur;
 
+import interfaces.IAfficheur;
+import interfaces.IChargeur;
+import interfaces.IModificateur;
+import interfaces.IPluginApp;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,7 +22,6 @@ import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-import chargement.IPluginApp;
 import chargement.Loader;
 
 public class Editeur implements IPluginApp{
@@ -29,7 +33,6 @@ public class Editeur implements IPluginApp{
 	private Loader loader;
 	private JTextArea textArea;
 	private JPanel textAreaPane;
-	
 	
 	public Editeur(){
 		texte = "";
