@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * La classe ChargementFichier est un exemple de plugin de type "Chargement", 
  * qui permet d'ajouter du texte dans l'éditeur à partir d'un fichier. 
  * @author Benjamin Grouhan, Alexis Guilbaud, Kevin Mokili
- * @see IAfficheur
+ * @see IChargeur
  */
 public class ChargementFichier implements IChargeur{
 
