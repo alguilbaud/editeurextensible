@@ -10,13 +10,20 @@ import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
-
+/**
+ * La classe ChargementFichier est un exemple de plugin de type "Chargement", 
+ * qui permet d'ajouter du texte dans l'éditeur à partir d'un fichier. 
+ * @author Benjamin Grouhan, Alexis Guilbaud, Kevin Mokili
+ * @see IAfficheur
+ */
 public class ChargementFichier implements IChargeur{
-	
-	public String informationsPlugin(){
-		return "Je suis un chargeur de données à partir d'un fichier.";
-	}
 
+	/**
+	 * Implémentation de la méthode recupererDonnees() de l'interface IChargeur.
+	 * <p> Va tout d'abord proposer d'ouvrir un fichier à l'aide d'un JFileChooser 
+	 * puis va charger le texte contenu dans le fichier pour le retourner sous forme de String.</p>
+	 * @see IChargeur#recupererDonnees()
+	 */
 	public String recupererDonnees() {
 		
 		JFileChooser jfc = new JFileChooser();
@@ -47,10 +54,4 @@ public class ChargementFichier implements IChargeur{
 		}
 		return res;
 	}
-	
-	
-	/*public static void main(String[] args){
-		ChargementFichier cf = new ChargementFichier();
-		System.out.println(cf.recupererDonnees("/comptes/E096489E/Documents/Lorem.txt"));
-	}*/
 }
