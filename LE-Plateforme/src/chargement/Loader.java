@@ -1,5 +1,8 @@
 package chargement;
 
+import interfaces.IPlugin;
+import interfaces.IPluginApp;
+
 import java.io.*;
 import java.util.*;
 import java.lang.Class;

@@ -1,4 +1,4 @@
-package chargement;
+package interfaces;
 
 
 public interface IPlugin {
