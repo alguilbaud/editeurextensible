@@ -7,7 +7,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import editeur.IAfficheur;
+import interfaces.IAfficheur;
 
 public class AfficheurComptage implements IAfficheur{
 
