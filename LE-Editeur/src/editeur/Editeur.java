@@ -24,6 +24,14 @@ import javax.swing.event.CaretListener;
 
 import chargement.Loader;
 
+/**
+ * La classe Editeur contient toutes les méthodes de base pour un éditeur de texte (copier, couper, coller, sélectionner...) 
+ * ainsi que tout ce qui concerne son interface graphique.
+ * 
+ * @author Benjamin Grouhan, Alexis Guilbaud, Kevin Mokili
+ *
+ */
+
 public class Editeur implements IPluginApp{
 	private JFrame fenetre;
 	private String texte = "";
@@ -34,6 +42,13 @@ public class Editeur implements IPluginApp{
 	private JTextArea textArea;
 	private JPanel textAreaPane;
 	
+	/**
+	 * Constructeur d'Editeur.
+	 * <p> 
+	 * A la construction d'un objet Editeur, le texte contenu ainsi que le presse-papier sont vides, le cuseur est à la position 0 et 
+	 * la longueur de la sélection vaut 0.
+	 * </p>
+	 */
 	public Editeur(){
 		texte = "";
 		pressePapier = "";
@@ -41,31 +56,49 @@ public class Editeur implements IPluginApp{
 		longueurSelection = 0;
 	}
 	
+	/**
+	 * Retourne le texte contenu dans l'éditeur.
+	 * @return Le texte écrit dans l'éditeur à cet instant.
+	 */
 	public String getTexte() {
 		return texte;
 	}
 
+	/**
+	 * Met à jour le texte contenu dans l'éditeur.
+	 * @param texte Le nouveau texte.
+	 */
 	public void setTexte(String texte) {
 		this.texte = texte;
 	}
 	
-	public String informationsPlugin(){
-		return "Je suis un éditeur de texte.";
-	}
-	
+	/**
+	 * Démarre l'application de l'éditeur et va appeler les méthodes pour créér son interface graphique.
+	 * @param l Instance du Loader à utiliser
+	 * @see Editeur#afficher()
+	 */
 	public void demarrer(Loader l){
 		loader = l;
 		afficher();
 		
 	}
 	
+	/**
+	 * Crée une JFrame qui contiendra la fenêtre de l'Editeur, puis appelle la méthode pour créer les fenêtres.
+	 * @see Editeur#creationFenetre()
+	 */
 	public void afficher(){
 		fenetre = new JFrame("Editeur");
 		creationFenetre();
 		fenetre.setVisible(true);
 	}
 	
-	public void ecrire(String chaine){ //insère la chaîne à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
+	/**
+	 * Insère la chaîne en paramètre à l'emplacement du curseur, ou à la place de la sélection, 
+	 * s'il y en a une (= efface la sélection puis insère)
+	 * @param chaine Le texte à insérer
+	 */
+	public void ecrire(String chaine){ 
 		String part1 = texte.substring(0,debutCurseur);
 		String part2 = texte.substring(debutCurseur+longueurSelection);
 		texte = part1 + chaine + part2;
@@ -75,7 +108,10 @@ public class Editeur implements IPluginApp{
 		textArea.setCaretPosition(debutCurseur); //fait rien, pourquoi ?
 	}
 	
-	public void effacer(){ //efface le caractère avant le curseur, ou la sélection s'il y en a une
+	/**
+	 * Efface le caractère avant le curseur, ou la sélection s'il y en a une.
+	 */
+	public void effacer(){
 		if(longueurSelection>0){
 			texte = texte.substring(0,debutCurseur) + texte.substring(debutCurseur + longueurSelection);
 			longueurSelection = 0;
@@ -88,24 +124,39 @@ public class Editeur implements IPluginApp{
 		textArea.setCaretPosition(debutCurseur); //fait rien, pourquoi ?
 	}
 	
-	public void copier(){ //met dans le presse papier ce qui est sélectionné
+	/**
+	 * Met dans le presse papier ce qui est sélectionné
+	 */
+	public void copier(){
 		if(longueurSelection>0){
 			pressePapier = texte.substring(debutCurseur,debutCurseur+longueurSelection);
 			System.out.println("Copié");
 		}
 	}
 	
-	public void couper(){ //met dans le presse papier ce qui est sélectionné puis efface la sélection
+	/**
+	 * Met dans le presse papier le texte sélectionné puis efface cette sélection.
+	 */
+	public void couper(){
 		copier();
 		effacer();
 	}
 	
-	public void coller(){ //insère le contenu du presse papier à l'emplacement du curseur, ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère)
+	/**
+	 * Insère le contenu du presse papier à l'emplacement du curseur, 
+	 * ou à la place de la sélection, s'il y en a une (= efface la sélection puis insère).
+	 */
+	public void coller(){ 
 		if(pressePapier.length()>0){
 			ecrire(pressePapier);
 		}
 	}
 	
+	/**
+	 * Met à jour les attributs représantant la sélection courante (debutCurseur et longueurSelection).
+	 * @param debut L'emplacement du premier caractère sélectionné dans le texte.
+	 * @param fin L'emplacement du dernier caractère sélectionné dans le texte.
+	 */
 	public void selectionner(int debut, int fin){
 		if(fin < debut){
 			int i = debut;
@@ -121,6 +172,14 @@ public class Editeur implements IPluginApp{
 		longueurSelection = fin - debutCurseur;
 	}
 	
+	/**
+	 * Crée et place tous les pannels nécessaires pour l'application :
+	 * <ul>
+	 * <li> Un pour la zone de texte </li>
+	 * <li> Un pour les boutons basiques </li>
+	 * <li> Un pour les boutons des plugins </li>
+	 * </ul>
+	 */
 	private void creationFenetre()
 	{
 		fenetre.setPreferredSize(new Dimension(1200,600)); //On donne une taille à notre fenêtre
@@ -155,6 +214,10 @@ public class Editeur implements IPluginApp{
 		fenetre.pack();
 	}
 	
+	/**
+	 * Crée la zone de texte de l'éditeur ainsi que les listeners correspondants.
+	 * @param panel Le JPanel de l'application
+	 */
 	private void creationTextArea(JPanel panel){
 		textArea = new JTextArea();
 		
@@ -175,8 +238,10 @@ public class Editeur implements IPluginApp{
 		panel.add(scrollPane, "Center");		
 	}
 	
-	
-	
+	/**
+	 * Crée les boutons d'actions standards (Copier, Couper, Coller, Effacer).
+	 * @param panel Le JPanel de l'application
+	 */
 	private void creationBoutonsStandards(JPanel panel){
 		JButton boutonCopier = new JButton("Copier");
 		boutonCopier.addActionListener(new ActionListener() { 
@@ -210,10 +275,15 @@ public class Editeur implements IPluginApp{
 		panel.add(boutonColler);
 		panel.add(boutonCouper);
 		panel.add(boutonEffacer);
-		
-		
 	}
 	
+	/**
+	 * Crée les boutons des plugins actuellement chargés, à l'aide des méthodes correspondant à chaque type de plugins.
+	 * @param panel Le JPanel de l'application
+	 * @see Editeur#creationBoutonsAfficheurs(JPanel)
+	 * @see Editeur#creationBoutonsChargeurs(JPanel)
+	 * @see Editeur#creationBoutonsModificateurs(JPanel)
+	 */
 	private void creationBoutonsPlugins(JPanel panel)
 	{
 		creationBoutonsModificateurs(panel);
@@ -221,6 +291,12 @@ public class Editeur implements IPluginApp{
 		creationBoutonsAfficheurs(panel);
 	}
 	
+	/**
+	 * Crée les boutons des plugins de type "Afficheur" actuellement chargés obtenus à l'aide du Loader.
+	 * <p>Ajoute également le composant graphique généré par ce plugin à la bonne position sur la fenêtre de l'application.</p>
+	 * 
+	 * @param panel Le JPanel de l'application
+	 */
 	private void creationBoutonsAfficheurs(JPanel panel){
 		ArrayList<String> afficheurs = loader.getNomsPlugins("afficheur");
 		for(String nomAff : afficheurs){
@@ -247,6 +323,11 @@ public class Editeur implements IPluginApp{
 		}
 	}
 	
+	/**
+	 * Crée les boutons des plugins de type "Modificateur" actuellement chargés, obtenus à l'aide du Loader.
+	 * <p>Ajoute également le listener correspondant, exécutant l'action du plugin après appui sur le bouton</p>
+	 * @param panel Le JPanel de l'application
+	 */
 	private void creationBoutonsModificateurs(JPanel panel){
 		ArrayList<String> modificateurs = loader.getNomsPlugins("modificateur");
 		for(String nomMod : modificateurs){
@@ -268,6 +349,11 @@ public class Editeur implements IPluginApp{
 		}
 	}
 	
+	/**
+	 * Crée les boutons des plugins de type "Chargeurs" actuellement chargés, obtenus à l'aide du Loader.
+	 * <p>Ajoute également le listener correspondant, exécutant l'action du plugin après appui sur le bouton</p>
+	 * @param panel Le JPanel de l'application
+	 */
 	private void creationBoutonsChargeurs(JPanel panel){
 		ArrayList<String> chargeurs = loader.getNomsPlugins("chargeur");
 		for(String nomCharg : chargeurs){
@@ -288,5 +374,4 @@ public class Editeur implements IPluginApp{
 			panel.add(jb);
 		}
 	}
-	
 }
