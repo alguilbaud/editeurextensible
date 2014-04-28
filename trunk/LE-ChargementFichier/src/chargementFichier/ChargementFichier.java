@@ -1,5 +1,7 @@
 package chargementFichier;
 
+import interfaces.IChargeur;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,7 +10,6 @@ import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
-import editeur.IChargeur;
 
 public class ChargementFichier implements IChargeur{
 	
