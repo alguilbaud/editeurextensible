@@ -23,9 +23,9 @@ public class Loader {
 		br = new BufferedReader(new FileReader(filePath));
 		ArrayList<URL> urls = new ArrayList<URL>();	
 		String canonicalFilePath = "file://" + new File(".").getCanonicalFile().getParent();
-		//premier passage pour construire l'URLClassLoader
+		//premier passage pour construire l'URLClassLoader, ainsi que les HashMap mapNomsTyes et mapNomsLocations
 		while((ligne = br.readLine()) != null){
-			if(ligne.charAt(0)!='#'){
+			if(!ligne.equals("") && ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
 				mapNomsTypes.put(args[0], args[3]);
 				mapNomsLocations.put(args[0], args[1]);
@@ -40,7 +40,7 @@ public class Loader {
 		//deuxième passage pour charger les plugins de démarrage
 		br = new BufferedReader(new FileReader(filePath));
 		while ((ligne = br.readLine()) != null){
-			if(ligne.charAt(0)!='#'){
+			if(!ligne.equals("") && ligne.charAt(0)!='#'){
 				String[] args = ligne.split(",");
 				if (args[4].equals("1")){
 					String nomPlugin = args[0];
