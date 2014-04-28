@@ -1,6 +1,6 @@
 package traducteurSchtroumpf;
 
-import editeur.IModificateur;
+import interfaces.IModificateur;
 
 public class TraducteurSchtroumpf implements IModificateur{
 	
