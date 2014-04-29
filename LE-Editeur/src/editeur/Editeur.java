@@ -33,13 +33,37 @@ import chargement.Loader;
  */
 
 public class Editeur implements IPluginApp{
+	/**
+	 * La frame contenant la fenêtre de l'éditeur
+	 */
 	private JFrame fenetre;
+	/**
+	 * Le texte actuellement contenu dans l'éditeur
+	 */
 	private String texte = "";
-	private String pressePapier = ""; //stocke ce qui est copié
-	private int debutCurseur = 0; //correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
+	/**
+	 * Le texte actuellement stocké dans le presse-papier interne de l'éditeur
+	 */
+	private String pressePapier = "";
+	/**
+	 * Correspond à l'emplacement du curseur ou à l'emplacement du début de la sélection s'il y en a une
+	 */
+	private int debutCurseur = 0;
+	/**
+	 * Le nombre de caractères actuellement sélectionnés
+	 */
 	private int longueurSelection = 0;
+	/**
+	 * L'instance du Loader utilisé pour charger les plugins
+	 */
 	private Loader loader;
+	/**
+	 * La zone de texte de l'éditeur
+	 */
 	private JTextArea textArea;
+	/**
+	 * Le pannel de la zone de texte
+	 */
 	private JPanel textAreaPane;
 	
 	/**
@@ -72,27 +96,7 @@ public class Editeur implements IPluginApp{
 		this.texte = texte;
 	}
 	
-	/**
-	 * Démarre l'application de l'éditeur et va appeler les méthodes pour créér son interface graphique.
-	 * @param l Instance du Loader à utiliser
-	 * @see Editeur#afficher()
-	 */
-	public void demarrer(Loader l){
-		loader = l;
-		afficher();
-		
-	}
-	
-	/**
-	 * Crée une JFrame qui contiendra la fenêtre de l'Editeur, puis appelle la méthode pour créer les fenêtres.
-	 * @see Editeur#creationFenetre()
-	 */
-	public void afficher(){
-		fenetre = new JFrame("Editeur");
-		creationFenetre();
-		fenetre.setVisible(true);
-	}
-	
+
 	/**
 	 * Insère la chaîne en paramètre à l'emplacement du curseur, ou à la place de la sélection, 
 	 * s'il y en a une (= efface la sélection puis insère)
@@ -173,7 +177,28 @@ public class Editeur implements IPluginApp{
 	}
 	
 	/**
-	 * Crée et place tous les pannels nécessaires pour l'application :
+	 * Démarre l'application de l'éditeur et va appeler les méthodes pour créér son interface graphique.
+	 * @param l Instance du Loader à utiliser
+	 * @see Editeur#afficher()
+	 */
+	public void demarrer(Loader l){
+		loader = l;
+		afficher();
+	}
+	
+	/**
+	 * Crée une JFrame qui contiendra la fenêtre de l'Editeur, puis appelle la méthode pour créer les fenêtres.
+	 * @see Editeur#creationFenetre()
+	 */
+	public void afficher(){
+		fenetre = new JFrame("Editeur");
+		creationFenetre();
+		fenetre.setVisible(true);
+	}
+	
+	
+	/**
+	 * Crée et place sur la fenêtre tous les pannels nécessaires pour l'application :
 	 * <ul>
 	 * <li> Un pour la zone de texte </li>
 	 * <li> Un pour les boutons basiques </li>
@@ -239,7 +264,7 @@ public class Editeur implements IPluginApp{
 	}
 	
 	/**
-	 * Crée les boutons d'actions standards (Copier, Couper, Coller, Effacer).
+	 * Crée les boutons d'actions standards (Copier, Couper, Coller, Effacer), ainsi que leurs listeners.
 	 * @param panel Le JPanel de l'application
 	 */
 	private void creationBoutonsStandards(JPanel panel){
@@ -292,7 +317,7 @@ public class Editeur implements IPluginApp{
 	}
 	
 	/**
-	 * Crée les boutons des plugins de type "Afficheur" actuellement chargés obtenus à l'aide du Loader.
+	 * Crée les boutons des plugins de type "Afficheur" actuellement chargés obtenus à l'aide du Loader, ainsi que leurs listeners.
 	 * <p>Ajoute également le composant graphique généré par ce plugin à la bonne position sur la fenêtre de l'application.</p>
 	 * 
 	 * @param panel Le JPanel de l'application
@@ -324,7 +349,7 @@ public class Editeur implements IPluginApp{
 	}
 	
 	/**
-	 * Crée les boutons des plugins de type "Modificateur" actuellement chargés, obtenus à l'aide du Loader.
+	 * Crée les boutons des plugins de type "Modificateur" actuellement chargés, obtenus à l'aide du Loader, ainsi que leurs listeners.
 	 * <p>Ajoute également le listener correspondant, exécutant l'action du plugin après appui sur le bouton</p>
 	 * @param panel Le JPanel de l'application
 	 */
@@ -350,7 +375,7 @@ public class Editeur implements IPluginApp{
 	}
 	
 	/**
-	 * Crée les boutons des plugins de type "Chargeurs" actuellement chargés, obtenus à l'aide du Loader.
+	 * Crée les boutons des plugins de type "Chargeurs" actuellement chargés, obtenus à l'aide du Loader, ainsi que leurs listeners.
 	 * <p>Ajoute également le listener correspondant, exécutant l'action du plugin après appui sur le bouton</p>
 	 * @param panel Le JPanel de l'application
 	 */
