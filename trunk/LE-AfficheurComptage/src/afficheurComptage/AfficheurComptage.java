@@ -49,6 +49,11 @@ public class AfficheurComptage implements IAfficheur{
 		return infos;
 	}
 	
+	/**
+	 * Méthode qui va mettre à jour les informations sur la taille du texte et le nombre de mots.
+	 * @param doc Le document à analyser
+	 * @return L'information mise à jour sous forme de String 
+	 */
 	public String creerString(Document doc){
 		int taille = doc.getLength();
 		int mots = 0;
