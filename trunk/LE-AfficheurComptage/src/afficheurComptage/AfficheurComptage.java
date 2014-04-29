@@ -28,9 +28,9 @@ public class AfficheurComptage implements IAfficheur{
 	 * @see IAfficheur#creerJComponent(JTextArea)
 	 */
 	public JComponent creerJComponent(JTextArea textArea) {
-		final JTextArea infos = new JTextArea("Taille : 0 / Mots : 0");
-		infos.setEditable(false);
 		final Document doc = textArea.getDocument();
+		final JTextArea infos = new JTextArea(creerString(doc));
+		infos.setEditable(false);
 		doc.addDocumentListener(new DocumentListener(){
 			public String creerString(){
 				int taille = doc.getLength();
@@ -72,6 +72,32 @@ public class AfficheurComptage implements IAfficheur{
 			
 		});
 		return infos;
+	}
+	
+	public String creerString(Document doc){
+		int taille = doc.getLength();
+		int mots = 0;
+		boolean motEnCours = false;
+		for(int i=0; i<taille; i++){
+			String car=null;
+			try {
+				car = doc.getText(i, 1);
+			} catch (BadLocationException e) {
+				System.out.println("BadLocationException.");
+			}
+			if (motEnCours){
+				if (car.equals(" ") || car.equals("\n") || car.equals("\t")){
+					motEnCours = false;
+				}
+			}
+			else{
+				if (!car.equals(" ") && !car.equals("\n") && !car.equals("\t")){
+					mots++;
+					motEnCours = true;
+				}
+			}
+		}
+		return "Taille : "+taille+" / Mots : "+mots;
 	}
 
 	/**
