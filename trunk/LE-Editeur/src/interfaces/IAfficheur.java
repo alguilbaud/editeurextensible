@@ -25,7 +25,6 @@ public interface IAfficheur extends IPluginTerminal{
 	 * <li> South </li>
 	 * <li> West </li>
 	 * </ul>
-	 * @return
 	 */
 	public String getPosition();
 	
