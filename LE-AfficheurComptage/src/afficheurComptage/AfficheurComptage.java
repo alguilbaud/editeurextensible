@@ -29,45 +29,20 @@ public class AfficheurComptage implements IAfficheur{
 	 */
 	public JComponent creerJComponent(JTextArea textArea) {
 		final Document doc = textArea.getDocument();
+		final AfficheurComptage afficheurComptage = this;
 		final JTextArea infos = new JTextArea(creerString(doc));
 		infos.setEditable(false);
 		doc.addDocumentListener(new DocumentListener(){
-			public String creerString(){
-				int taille = doc.getLength();
-				int mots = 0;
-				boolean motEnCours = false;
-				for(int i=0; i<taille; i++){
-					String car=null;
-					try {
-						car = doc.getText(i, 1);
-					} catch (BadLocationException e) {
-						System.out.println("BadLocationException.");
-					}
-					if (motEnCours){
-						if (car.equals(" ") || car.equals("\n") || car.equals("\t")){
-							motEnCours = false;
-						}
-					}
-					else{
-						if (!car.equals(" ") && !car.equals("\n") && !car.equals("\t")){
-							mots++;
-							motEnCours = true;
-						}
-					}
-				}
-				return "Taille : "+taille+" / Mots : "+mots;
-			}
-			
 			public void changedUpdate(DocumentEvent arg0) {
-				infos.setText(creerString());
+				infos.setText(afficheurComptage.creerString(doc));
 			}
 
 			public void insertUpdate(DocumentEvent arg0) {
-				infos.setText(creerString());
+				infos.setText(afficheurComptage.creerString(doc));
 			}
 
 			public void removeUpdate(DocumentEvent arg0) {
-				infos.setText(creerString());
+				infos.setText(afficheurComptage.creerString(doc));
 			}
 			
 		});
