@@ -23,13 +23,13 @@ public class TraducteurSchtroumpf implements IModificateur{
 	    Matcher m = p.matcher(texte);
 	    StringBuffer sb = new StringBuffer();
 	    Random rand = new Random();
-	    int r = rand.nextInt(5);
+	    int r = rand.nextInt(10);
 	    int i = 0;
 	    while(m.find()){
 	    	if(i==r){
 	    		m.appendReplacement(sb,"schtroumpf");
 	    		i = 0;
-	    		r = rand.nextInt(5);
+	    		r = rand.nextInt(10);
 	    	}
 	    	else{
 	    		i++;
